@@ -1,3 +1,4 @@
+import 'package:currency_converter/cubit/counter_cubit.dart';
 import 'package:flutter/material.dart';
 
 
@@ -9,13 +10,15 @@ class CurrencyConverter extends StatefulWidget {
 }
 
 class _CurrencyConverterState extends State<CurrencyConverter> {
-  double result = 0;
+  final counterCubit = CounterCubit();
+
+
   final TextEditingController textEditingController = TextEditingController();
 
 
   @override
   Widget build(BuildContext context) {
-
+    final result = counterCubit.state;
     final border = OutlineInputBorder(
         borderSide: BorderSide(
             width: 2.0,
@@ -46,7 +49,7 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
               child: TextField(
                 controller: textEditingController,
                 style: const TextStyle(
-                    color: Colors.white
+                    color: Colors.black
                 ),
                 decoration: InputDecoration(
                   hintText: 'Please enter the amount in USD',
@@ -56,6 +59,7 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
                   prefixIcon: const Icon(Icons.monetization_on_outlined),
                   prefixIconColor: Colors.black,
                   filled: true,
+
                   fillColor: Colors.white,
                   focusedBorder: border,
                   enabledBorder: border,
@@ -66,9 +70,11 @@ class _CurrencyConverterState extends State<CurrencyConverter> {
             ),
             TextButton(
                 onPressed: () {
-                  setState(() {
-                    result = double.parse(textEditingController.text) * 81;
-                  });
+                  counterCubit.currencyConverter(textEditingController.text);
+                  setState(() {});
+                  // setState(() {
+                  //   result = double.parse(textEditingController.text) * 81;
+                  // });
 
                 },
                 style: TextButton.styleFrom(
